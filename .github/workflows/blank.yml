@@ -40,16 +40,20 @@ jobs:
         run: |
           git clone https://github.com/PaperMC/Folia.git --depth=1 ~/folia
 
-      - name: applyPathches
+#      - name: applyPathches
+#        run: |
+#          cd ~/folia
+#          ./gradlew applyPatches
+#          
+#      - name: building...
+#        run: |
+#          cd ~/folia
+#          ./gradlew createReobfBundlerJar
+#
+      - name: test
         run: |
-          cd ~/folia
-          ./gradlew applyPatches
-          
-      - name: building...
-        run: |
-          cd ~/folia
-          ./gradlew createReobfBundlerJar
-        
+          mkdir -p ~/folia/build/libs
+          echo "testaaa1145141919810" >> ~/folia/build/libs/folia-1.20.1.jar
       # Get the date of the build
       - name: Get date
         id: date

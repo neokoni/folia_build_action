@@ -27,7 +27,7 @@ jobs:
         run: apt install openjdk-17-jdk
 
       # Runs a single command using the runners shell
-      - name: set the git information
+      #- name: set the git information
       - uses: actions/checkout@v3
       - uses: fregante/setup-git-user@v2
 

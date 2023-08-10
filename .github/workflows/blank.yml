@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Install env
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-        run: sudo apt install openjdk-17-jdk
+        run: sudo apt-get install openjdk-17-jdk  --fix-missing
 
       # Runs a single command using the runners shell
       #- name: set the git information

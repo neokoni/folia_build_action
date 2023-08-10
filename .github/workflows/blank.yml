@@ -50,7 +50,7 @@ jobs:
           cd ~/folia
           ./gradlew createReobfBundlerJar
         
-      - uses: Shopify/upload-to-release@v1
+      - uses: Shopify/upload-to-release@v1.0.1
         with:
           name: build-`date '+%Y-%m-%d'`
           path: ~/folia/build/libs/folia-*.jar

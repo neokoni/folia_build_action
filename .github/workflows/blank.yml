@@ -24,10 +24,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - run: |
-          git config user.name "GitHub Actions"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-      - run: |
+      - name: set the git information
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          
+      - name: setup env
+        run: |
           sudo apt update
           sudo apt-get install openjdk-17-jdk  --fix-missing
 
@@ -38,8 +42,6 @@ jobs:
 
       - name: applyPathches
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cd ~/folia
           ./gradlew applyPatches
           
@@ -48,3 +50,9 @@ jobs:
           cd ~/folia
           ./gradlew createReobfBundlerJar
         
+      - uses: Shopify/upload-to-release@v1
+        with:
+          name: build-`date '+%Y-%m-%d'`
+          path: ~/folia/build/libs/folia-*.jar
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          content-type: text/plain # Optional

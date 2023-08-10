@@ -23,26 +23,24 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - uses: fregante/setup-git-user@v2
       - run: |
           sudo apt update
           sudo apt-get install openjdk-17-jdk  --fix-missing
-
-      # Runs a single command using the runners shell
-      #- name: set the git information
-      - uses: actions/checkout@v3
-      - uses: fregante/setup-git-user@v2
 
       # Runs a set of commands using the runners shell
       - name: clone folia repo
         run: |
           git clone https://github.com/PaperMC/Folia.git --depth=1 ~/folia
-          
-          
-      - uses: fregante/setup-git-user@v2   
-      - run: |
+
+      - name: applyPathches
+        run: |
           cd ~/folia
           ./gradlew applyPatches
-      - run: |
+          
+      - name: building...
+        run: |
           cd ~/folia
           ./gradlew createReobfBundlerJar
         

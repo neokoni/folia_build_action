@@ -82,3 +82,7 @@ jobs:
           asset_path: ~/folia/build/libs/folia-*.jar 
           asset_name: ${{ steps.get_name.outputs.name }}
           asset_content_type: application/java-archive
+          
+    permissions:
+      contents: write
+  

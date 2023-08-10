@@ -50,9 +50,24 @@ jobs:
           cd ~/folia
           ./gradlew createReobfBundlerJar
         
-      - uses: Shopify/upload-to-release@v1.0.1
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: build-`date '+%Y-%m-%d'`
-          path: ~/folia/build/libs/folia-*.jar
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          content-type: text/plain # Optional
+          tag_name: build-`date '+%Y-%m-%d'`
+          release_name: Release-`date '+%Y-%m-%d'`
+          body: build data:`date '+%Y-%m-%d'`
+          draft: false
+          prerelease: false
+        
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ~/folia/build/libs/folia-*.jar
+          asset_name: folia-*.jar
+          asset_content_type: ~/folia/build/libs

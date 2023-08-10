@@ -36,6 +36,7 @@ jobs:
 
       - name: applyPathches
         run: |
+          cat ~/.gitconfig
           cd ~/folia
           ./gradlew applyPatches
           

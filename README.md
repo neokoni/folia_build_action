@@ -1,4 +1,4 @@
-## Automatically compile Folia| 自动编译Folia
+## Automatically compile Folia|自动编译Folia
 You can download the automatically compiled [Folia](https://papermc.io/software/folia) server-side jar file, which is built using the default branch of the Folia repository. and publish to [Release](https://github.com/sekaom/folia_build_action/releases) to this repository when finished.  
 
 ------------

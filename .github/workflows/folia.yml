@@ -12,6 +12,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+  schedule:
+    - cron: "0 16 * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -34,26 +36,25 @@ jobs:
         run: |
           sudo apt update
           sudo apt-get install openjdk-17-jdk  --fix-missing
+          # set-timezone
+          sudo timedatectl set-timezone Asia/Shanghai
+
 
       # Runs a set of commands using the runners shell
       - name: clone folia repo
         run: |
           git clone https://github.com/PaperMC/Folia.git --depth=1 ~/folia
 
-#      - name: applyPathches
-#        run: |
-#          cd ~/folia
-#          ./gradlew applyPatches
-#          
-#      - name: building...
-#        run: |
-#          cd ~/folia
-#          ./gradlew createReobfBundlerJar
-#
-      - name: test
+      - name: applyPathches
         run: |
-          mkdir -p ~/folia/build/libs
-          echo "testaaa1145141919810" >> ~/folia/build/libs/folia-1.20.1.jar
+          cd ~/folia
+          ./gradlew applyPatches
+          
+      - name: building...
+        run: |
+          cd ~/folia
+          ./gradlew createReobfBundlerJar
+
       # Get the date of the build
       - name: Get date
         id: date

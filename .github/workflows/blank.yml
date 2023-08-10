@@ -40,7 +40,6 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          cat ~/.gitconfig
           cd ~/folia
           ./gradlew applyPatches
           

@@ -38,6 +38,9 @@ jobs:
         run: |
           git clone https://github.com/PaperMC/Folia.git --depth=1 ~/folia
           
+          
+      - uses: fregante/setup-git-user@v2   
+      
       - name: applyPatch
         run: |
           cd ~/folia

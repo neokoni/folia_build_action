@@ -38,15 +38,13 @@ jobs:
 
       - name: applyPathches
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cd ~/folia
           ./gradlew applyPatches
           
       - name: building...
         run: |
-          git config user.name "GitHub Actions"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           cd ~/folia
           ./gradlew createReobfBundlerJar
         

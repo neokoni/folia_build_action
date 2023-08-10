@@ -22,9 +22,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Install env
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-        run: |
+      - run: |
           sudo apt update
           sudo apt-get install openjdk-17-jdk  --fix-missing
 
@@ -40,13 +39,10 @@ jobs:
           
           
       - uses: fregante/setup-git-user@v2   
-      
-      - name: applyPatch
-        run: |
+      - run: |
           cd ~/folia
           ./gradlew applyPatches
-      - name: building
-        run: |
+      - run: |
           cd ~/folia
           ./gradlew createReobfBundlerJar
         

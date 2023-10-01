@@ -33,7 +33,7 @@ jobs:
       - name: setup env
         run: |
           sudo apt update
-          sudo apt-get install openjdk-21-jdk  --fix-missing
+          sudo apt-get install openjdk-jdk  --fix-missing
           # set-timezone
           sudo timedatectl set-timezone Asia/Shanghai
 

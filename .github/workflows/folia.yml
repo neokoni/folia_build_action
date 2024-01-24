@@ -48,6 +48,7 @@ jobs:
         with:
           repository: 'PaperMC/Folia'
           path: test
+      - name: show branch
         run: |
           - cd test
           - git branch -a

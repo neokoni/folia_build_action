@@ -26,6 +26,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+        with:
+          repository: 'PaperMC/Folia'
+          path: test
+
+
       - name: set the git information
         run: |
           git config --global user.name "GitHub Actions"

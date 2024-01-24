@@ -46,7 +46,7 @@ jobs:
       - name: Get dev branch info
         id: dev
         run: |
-          cd folia
+          cd ~/folia
           echo "::set-output name=dev::$(git branch -a | grep dev | sed 's/^.................//' )"
 
       - name: Try to reclone dev branch to build

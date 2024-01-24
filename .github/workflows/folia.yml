@@ -54,7 +54,7 @@ jobs:
         run: |
           cd ~
           rm -rf folia
-          git clone https://github.com/folia -b ${{ steps.dev.outputs.dev }}
+          git clone https://github.com/papermc/folia -b ${{ steps.dev.outputs.dev }}
 
       - name: applyPathches
         run: |

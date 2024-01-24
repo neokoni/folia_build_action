@@ -41,6 +41,16 @@ jobs:
 
 
       # Runs a set of commands using the runners shell
+
+
+      - uses: actions/checkout@v4
+        with:
+          repository: 'PaperMC/Folia'
+          path: test
+        run: |
+          - cd test
+          - git branch -a
+          
       - name: clone folia repo
         run: |
           git clone https://github.com/PaperMC/Folia.git --depth=1 ~/folia -b dev/1.20.4

@@ -49,13 +49,13 @@ jobs:
           cd ~/folia
           echo "::set-output name=dev::$(git branch -a | grep dev | sed 's/^.................//' )"
 
-      - name: Try to reclone dev branch to build
+      - name: Reclone dev branch to build
         if: ${{ steps.dev.outputs.dev }} != ''
         run: |
           cd ~
           rm -rf folia
           git clone https://github.com/papermc/folia -b ${{ steps.dev.outputs.dev }}
-
+          
       - name: applyPathches
         run: |
           cd ~/folia

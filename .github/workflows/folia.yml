@@ -51,7 +51,7 @@ jobs:
 
       - name: Get null
         id: 'null'
-        run: echo "::set-output name=null::$(git branch -a | grep ver/1.20.4 | sed 's/^.................//' )"
+        run: echo "::set-output name=null::$(git branch -a | grep var| sed 's/^.................//' )"
 
       - name: Reclone dev branch to build
         if: ${{ steps.dev.outputs.dev }} != ${{ steps.null.outputs.null }}

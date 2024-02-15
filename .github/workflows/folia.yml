@@ -18,7 +18,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build-default-branch:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -48,14 +48,6 @@ jobs:
         run: |
           cd ~/folia
           echo "::set-output name=dev::$(git branch -a | grep dev | sed 's/^.................//' )"       
-
-      - name: Get null
-        id: 'null'
-        run: |
-          cd ~/folia
-          export dev=dev
-          if [ $(git branch -a | grep dev | sed 's/^.................//' | sed 's/.......$//')  == $dev ]; then  echo "::set-output name=null::true" else echo "::set-output name=null::false" ;fi
-
       - name: Reclone dev branch to build
         if: ${{ steps.null.outputs.null }} == true
         run: |
@@ -105,7 +97,75 @@ jobs:
           asset_path: /home/runner/folia/build/libs/${{ steps.get_name.outputs.name }}
           asset_name: ${{ steps.get_name.outputs.name }}
           asset_content_type: application/java-archive
+
+  build-dev-branch:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: set the git information
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
+          
+      - name: setup env
+        run: |
+          sudo apt update
+          sudo apt-get install openjdk-17-jdk  --fix-missing
+          # set-timezone
+          sudo timedatectl set-timezone Asia/Shanghai
+
+
+      # Runs a set of commands using the runners shell
+      - name: clone folia repo
+        run: |
+          git clone https://github.com/PaperMC/Folia.git ~/folia
+
+      - name: Get dev branch info
+        id: dev1
+        run: |
+          cd ~/folia
+          echo "::set-output name=dev1::$(git branch -a | grep dev | sed 's/^.................//' )"       
+
+      - name: Reclone dev branch to build
+        run: |
+          cd ~
+          rm -rf folia
+          git clone https://github.com/papermc/folia -b ${{ steps.dev1.outputs.dev1 }}
+          
+      - name: applyPathches
+        run: |
+          cd ~/folia
+          ./gradlew applyPatches
+          
+      - name: building...
+        run: |
+          cd ~/folia
+          ./gradlew createReobfBundlerJar
+
+      # Get the date of the build
+      - name: Get date
+        id: date1
+        run: echo "::set-output name=date1::$(date +'%Y-%m-%d')"
+        
+      - name: get jar file name
+        id: get_name1
+        run: echo "::set-output name=name1::$(ls ~/folia/build/libs/)"
+
+      
+      # Upload the jar file to the release as an asset
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ build-default-branch.steps.create_release.outputs.upload_url }} 
+          asset_path: /home/runner/folia/build/libs/${{ steps.get_name1.outputs.name1 }}
+          asset_name: ${{ steps.get_name1.outputs.name1 }}
+          asset_content_type: application/java-archive
     permissions:
       contents: write
   

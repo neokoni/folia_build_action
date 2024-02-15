@@ -53,10 +53,10 @@ jobs:
         id: 'null'
         run: |
           cd ~/folia
-          echo "::set-output name=null::$(git branch -a | grep var| sed 's/^.................//' )"
+          if [$(git branch -a | grep dev)$ == $(git branch -a | grep var)]; then echo 1 else echo "::set-output name=null::true" fi
 
       - name: Reclone dev branch to build
-        if: ${{ steps.dev.outputs.dev }} != ${{ steps.null.outputs.null }}
+        if: ${{ steps.null.outputs.null }} == true
         run: |
           cd ~
           rm -rf folia

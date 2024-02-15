@@ -50,7 +50,7 @@ jobs:
           echo "::set-output name=dev::$(git branch -a | grep dev | sed 's/^.................//' )"       
 
       - name: Get null
-        id: null
+        id: 'null'
         run: echo "::set-output name=null::$(git branch -a | grep ver/1.20.4 | sed 's/^.................//' )"
 
       - name: Reclone dev branch to build

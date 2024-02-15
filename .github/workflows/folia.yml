@@ -52,7 +52,7 @@ jobs:
       - name: Get null
         id: 'null'
         run: |
-          cd ~/cd
+          cd ~/folia
           echo "::set-output name=null::$(git branch -a | grep var| sed 's/^.................//' )"
 
       - name: Reclone dev branch to build

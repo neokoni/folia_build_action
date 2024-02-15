@@ -51,7 +51,7 @@ jobs:
 
       - name: Get empty text
         id: 'null'
-        run: echo "::set-output name=null::$(ls | grep 1145141919)"
+        run: echo "::set-output name=null::$(git branch -a | grep dav | sed 's/^.................//' )"
         
 
       - name: Reclone dev branch to build

@@ -54,7 +54,7 @@ jobs:
         run: |
           cd ~/folia
           dev=dev
-          if [$(git branch -a | grep dev | sed 's/^.................//' | sed 's/.......$//')  = dev]; then  echo "::set-output name=null::true" else echo "::set-output name=null::false" ;fi
+          if [ $(git branch -a | grep dev | sed 's/^.................//' | sed 's/.......$//')  = dev ]; then  echo "::set-output name=null::true" else echo "::set-output name=null::false" ;fi
 
       - name: Reclone dev branch to build
         if: ${{ steps.null.outputs.null }} == true

@@ -42,18 +42,6 @@ jobs:
       - name: clone folia repo
         run: |
           git clone https://github.com/PaperMC/Folia.git ~/folia
-
-      - name: Get dev branch info
-        id: dev
-        run: |
-          cd ~/folia
-          echo "::set-output name=dev::$(git branch -a | grep dev | sed 's/^.................//' )"       
-      - name: Reclone dev branch to build
-        if: ${{ steps.null.outputs.null }} == true
-        run: |
-          cd ~
-          rm -rf folia
-          git clone https://github.com/papermc/folia -b ${{ steps.dev.outputs.dev }}
           
       - name: applyPathches
         run: |

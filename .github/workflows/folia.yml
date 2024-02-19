@@ -128,7 +128,7 @@ jobs:
         id: dev1
         run: |
           cd ~/folia
-          echo "::set-output name=dev1::$(git branch -a | grep dev | sed 's/^.................//' )"       
+          echo "::set-output name=dev1::$(git branch -a | grep ver | sed 's/^.................//' )"       
 
       - name: Reclone dev branch to build
         run: |

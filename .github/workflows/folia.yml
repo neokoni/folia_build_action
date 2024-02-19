@@ -94,7 +94,9 @@ jobs:
           mode: set
           key: url
           value: ${{ steps.create_release.outputs.upload_url }}
-        
+    permissions:
+      contents: write
+  
 
   build-dev-branch:
     # The type of runner that the job will run on

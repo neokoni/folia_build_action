@@ -114,11 +114,15 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           
-      - name: setup env
+      - uses: actions/checkout@v4
+      - name: JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'zulu'
+          
+      - name: set-timezone
         run: |
-          sudo apt update
-          sudo apt-get install openjdk-17-jdk  --fix-missing
-          # set-timezone
           sudo timedatectl set-timezone Asia/Shanghai
 
 

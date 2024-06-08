@@ -33,7 +33,7 @@ jobs:
       - name: setup env
         run: |
           sudo apt update
-          sudo apt-get install openjdk-17-jdk  --fix-missing
+          sudo apt-get install openjdk-21-jdk  --fix-missing
           # set-timezone
           sudo timedatectl set-timezone Asia/Shanghai
 
@@ -51,7 +51,7 @@ jobs:
       - name: building...
         run: |
           cd ~/folia
-          ./gradlew createReobfBundlerJar
+          ./gradlew createMojmapPaperclipJar
 
       # Get the date of the build
       - name: Get date

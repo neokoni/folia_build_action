@@ -45,6 +45,12 @@ jobs:
       - name: clone folia repo
         run: |
           git clone https://github.com/PaperMC/Folia.git ~/folia
+
+      - name: Get dev branch info
+        id: dev
+        run: |
+          cd ~/folia
+          echo "::set-output name=dev::$(git branch -a | grep dev | sed 's/^.................//' | sort -rV )"  
           
       - name: applyPathches
         run: |
@@ -65,6 +71,14 @@ jobs:
         id: get_name
         run: echo "::set-output name=name::$(ls ~/folia/build/libs/ | grep paperclip)"
 
+      - name: get latest commit information
+        id: get_commit_info
+        run: |
+          echo "::set-output name=commit_info1::$(echo default banch:  )"
+          echo "::set-output name=commit_info2::$(echo [$(git rev-parse --short HEAD)]"(https://github.com/papermc/folia/commit/$(git rev-parse HEAD))": $(git log -1 --pretty=format:"%s" )  )"
+          echo "::set-output name=commit_info3::$(echo dev banch:  )"
+          echo "::set-output name=commit_info2::$(echo [$(git rev-parse --short origin/${{ steps.dev.outputs.dev }})]"(https://github.com/papermc/folia/commit/$(git rev-parse HEAD))": $(git log -1 --pretty=format:"%s" ))"
+
       # Create a release with the date as the title and tag
       - name: Create Release
         id: create_release
@@ -74,6 +88,11 @@ jobs:
         with:
           tag_name: ${{ steps.date.outputs.date }}
           release_name: ${{ steps.date.outputs.date }}
+          body: |
+            ${{ steps.get_commit_info.outputs.commit_info1 }}
+            ${{ steps.get_commit_info.outputs.commit_info2 }}
+            ${{ steps.get_commit_info.outputs.commit_info3 }}
+            ${{ steps.get_commit_info.outputs.commit_info4 }}
           draft: false
           prerelease: false
       

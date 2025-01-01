@@ -74,10 +74,11 @@ jobs:
       - name: get latest commit information
         id: get_commit_info
         run: |
-          echo "::set-output name=commit_info1::$(echo default banch:  )"
-          echo "::set-output name=commit_info2::$(echo [$(git rev-parse --short HEAD)]"(https://github.com/papermc/folia/commit/$(git rev-parse HEAD))": $(git log -1 --pretty=format:"%s" )  )"
-          echo "::set-output name=commit_info3::$(echo dev banch:  )"
-          echo "::set-output name=commit_info2::$(echo [$(git rev-parse --short origin/${{ steps.dev.outputs.dev }})]"(https://github.com/papermc/folia/commit/$(git rev-parse HEAD))": $(git log -1 --pretty=format:"%s" ))"
+          cd ~/folia
+          echo "::set-output name=commit_info1::$(echo default banch:)"
+          echo "::set-output name=commit_info2::$(echo [$(git rev-parse --short HEAD)]"(https://github.com/papermc/folia/commit/$(git rev-parse HEAD))": $(git log -1 --pretty=format:"%s" ))"
+          echo "::set-output name=commit_info3::$(echo dev banch:)"
+          echo "::set-output name=commit_info4::$(echo [$(git rev-parse --short origin/${{ steps.dev.outputs.dev }})]"(https://github.com/papermc/folia/commit/$(git rev-parse origin/${{ steps.dev.outputs.dev }}))": $(git log -1 --pretty=format:"%s"))"
 
       # Create a release with the date as the title and tag
       - name: Create Release

@@ -60,7 +60,7 @@ jobs:
       - name: applyPathches
         run: |
           cd ~/folia
-          ./gradlew applyPatches
+          ./gradlew clean applyPatches
           
       - name: building...
         run: |
@@ -177,7 +177,7 @@ jobs:
       - name: applyPathches
         run: |
           cd ~/folia
-          ./gradlew applyPatches
+          ./gradlew clean applyPatches
           
       - name: building...
         run: |

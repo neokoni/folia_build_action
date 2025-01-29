@@ -76,6 +76,9 @@ jobs:
         id: get_name
         run: echo "::set-output name=name::$(ls ~/folia/build/libs/ | grep paperclip)"
 
+      - name: rename file 
+        run: "mv ~/folia/build/libs/${{ steps.get_name.outputs.name }} ~/folia/build/libs/[main]${{ steps.get_name.outputs.name }}"
+
       - name: get latest commit information
         id: get_commit_info
         run: |
@@ -110,8 +113,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: /home/runner/folia/build/libs/${{ steps.get_name.outputs.name }}
-          asset_name: ${{ steps.get_name.outputs.name }}
+          asset_path: "/home/runner/folia/build/libs/[main]${{ steps.get_name.outputs.name }}"
+          asset_name: "[main]${{ steps.get_name.outputs.name }}"
           asset_content_type: application/java-archive
 
       - name: set upload_url
@@ -190,6 +193,9 @@ jobs:
         id: get_name1
         run: echo "::set-output name=name1::$(ls ~/folia/build/libs/ | grep paperclip)"
 
+      - name: rename file
+        run: "mv ~/folia/build/libs/${{ steps.get_name.outputs.name1 }} ~/folia/build/libs/[main]${{ steps.get_name.outputs.name1 }}"
+
       - name: get upload_url
         id: get_upload_url
         uses: noobly314/share-data@v1
@@ -206,8 +212,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_upload_url.outputs.data }}
-          asset_path: /home/runner/folia/build/libs/${{ steps.get_name1.outputs.name1 }}
-          asset_name: ${{ steps.get_name1.outputs.name1 }}
+          asset_path: "/home/runner/folia/build/libs/[dev]${{ steps.get_name1.outputs.name1 }}"
+          asset_name: "[dev]${{ steps.get_name1.outputs.name1 }}"
           asset_content_type: application/java-archive
     permissions:
       contents: write

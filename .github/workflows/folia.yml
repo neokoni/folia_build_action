@@ -21,6 +21,8 @@ jobs:
   build-default-branch:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.save_upload_url.outputs.url }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -122,14 +124,11 @@ jobs:
           asset_name: "[main]${{ steps.get_name.outputs.name }}"
           asset_content_type: application/java-archive
 
-      - name: set upload_url
-        id: set_upload_url
-        uses: noobly314/share-data@v1
-        with:
-          share-id: release_url
-          mode: set
-          key: url
-          value: ${{ steps.create_release.outputs.upload_url }}
+      - name: save upload url
+        id: save_upload_url
+        run: |
+          echo "url=${{ steps.create_release.outputs.upload_url }}" >> "$GITHUB_OUTPUT"
+          
     permissions:
       contents: write
   
@@ -204,15 +203,7 @@ jobs:
         run: echo "::set-output name=name1::$(ls ~/folia/build/libs/ | grep paperclip)"
 
       - name: rename file
-        run: "mv ~/folia/build/libs/${{ steps.get_name.outputs.name1 }} ~/folia/build/libs/[main]${{ steps.get_name.outputs.name1 }}"
-
-      - name: get upload_url
-        id: get_upload_url
-        uses: noobly314/share-data@v1
-        with:
-          share-id: release_url
-          mode: get
-          key: url
+        run: "mv ~/folia/build/libs/${{ steps.get_name.outputs.name1 }} ~/folia/build/libs/[main]${{ steps.get_name.outputs.name1 }}"    
       
       # Upload the jar file to the release as an asset
       - name: Upload Release Asset
@@ -220,8 +211,9 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          UPLOAD_URL: ${{needs.build-default-branch.outputs.url}}
         with:
-          upload_url: ${{ steps.get_upload_url.outputs.data }}
+          upload_url: $UPLOAD_URL
           asset_path: "/home/runner/folia/build/libs/[dev]${{ steps.get_name1.outputs.name1 }}"
           asset_name: "[dev]${{ steps.get_name1.outputs.name1 }}"
           asset_content_type: application/java-archive

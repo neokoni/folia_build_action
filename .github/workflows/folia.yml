@@ -211,9 +211,8 @@ jobs:
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          UPLOAD_URL: ${{needs.build-default-branch.outputs.url}}
         with:
-          upload_url: $UPLOAD_URL
+          upload_url: ${{needs.build-default-branch.outputs.url}}
           asset_path: "/home/runner/folia/folia-server/build/libs/[dev]${{ steps.get_name1.outputs.name1 }}"
           asset_name: "[dev]${{ steps.get_name1.outputs.name1 }}"
           asset_content_type: application/java-archive

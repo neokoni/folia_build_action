@@ -203,7 +203,7 @@ jobs:
         run: echo "::set-output name=name1::$(ls ~/folia/folia-server/build/libs/ | grep paperclip)"
 
       - name: rename file
-        run: "mv ~/folia/folia-server/build/libs/${{ steps.get_name1.outputs.name1 }} ~/folia/folia-server/build/libs/[main]${{ steps.get_name1.outputs.name1 }}"    
+        run: "mv ~/folia/folia-server/build/libs/${{ steps.get_name1.outputs.name1 }} ~/folia/folia-server/build/libs/[dev]${{ steps.get_name1.outputs.name1 }}"    
       
       # Upload the jar file to the release as an asset
       - name: Upload Release Asset

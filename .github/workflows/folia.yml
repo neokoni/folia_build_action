@@ -44,6 +44,11 @@ jobs:
         run: |
           echo "::set-output name=get_build_java_ver1::$(cat ~/folia/.github/workflows/build.yml | grep java-version | sed 's/^.........................//'| sed 's/^.................//' | sed 's/.$//')"
 
+      - name: get applyPatches command
+        id: get_applyPatches_command1
+        run: |
+          echo "::set-output name=get_applyPatches_command1::$(cat ~/folia/.github/workflows/build.yml | grep apply | sed 's/^...//'| sed 's/^..........//' | sed 's/$//')"
+
       - uses: actions/checkout@v4
       - name: JDK 21
         uses: actions/setup-java@v4
@@ -60,7 +65,7 @@ jobs:
       - name: applyPathches
         run: |
           cd ~/folia
-          ./gradlew clean applyPatches
+          ${{ steps.get_applyPatches_command1.outputs.get_applyPatches_command1 }}
           
       - name: building...
         run: |
@@ -167,6 +172,11 @@ jobs:
         run: |
           echo "::set-output name=get_build_java_ver2::$(cat ~/folia/.github/workflows/build.yml | grep java-version | sed 's/^.........................//'| sed 's/^.................//' | sed 's/.$//')"
 
+      - name: get applyPatches command
+        id: get_applyPatches_command2
+        run: |
+          echo "::set-output name=get_applyPatches_command2::$(cat ~/folia/.github/workflows/build.yml | grep apply | sed 's/^...//'| sed 's/^..........//' | sed 's/$//')"
+
       - uses: actions/checkout@v4
       - name: JDK 21
         uses: actions/setup-java@v4
@@ -177,7 +187,7 @@ jobs:
       - name: applyPathches
         run: |
           cd ~/folia
-          ./gradlew clean applyPatches
+          ${{ steps.get_applyPatches_command2.outputs.get_applyPatches_command2 }}
           
       - name: building...
         run: |

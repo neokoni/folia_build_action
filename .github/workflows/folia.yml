@@ -84,7 +84,7 @@ jobs:
         run: echo "::set-output name=name::$(ls ~/folia/folia-server/build/libs/ | grep paperclip)"
 
       - name: rename file 
-        run: "mv ~/folia/folia-server/build/libs/${{ steps.get_name.outputs.name }} ~/folia/build/libs/[main]${{ steps.get_name.outputs.name }}"
+        run: "mv ~/folia/folia-server/build/libs/${{ steps.get_name.outputs.name }} ~/folia/folia-server/build/libs/[main]${{ steps.get_name.outputs.name }}"
 
       - name: get latest commit information
         id: get_commit_info
